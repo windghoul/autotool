@@ -31,3 +31,5 @@ dbrestart:
 dbstart:
 		docker run --name Gmysql -v $(PWD)/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -d mysql
 		docker run --name Gredis -p 6379:6379 -v $(PWD)/data:/data  -d redis redis-server --appendonly yes
+dockerrun:
+        docker run --entrypoint=/bin/bash --restart=always --name=autotool  -ti -p 8080:8080  autotool:v8.1
