@@ -178,7 +178,7 @@ func git(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 func main() {
 	router := httprouter.New()
 	router.POST("/git", git)
-	// router.POST("/git", testJSON)
+	router.POST("/fileoperate", Fileoperate)
 	log.WithFields(log.Fields{
 		"time": time.Now().Format("2006-01-02 15:04:05"),
 	}).Info("server running......... ")
