@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,6 +8,7 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
+	log "github.com/sirupsen/logrus"
 )
 
 var categories string
@@ -17,7 +17,10 @@ func rewriteFile(file, timecontent, head string) bool {
 	fi, err := os.Open(file) // 打开文件
 	defer fi.Close()         //关闭文件
 	if err != nil {
-		fmt.Println(err.Error())
+		log.WithFields(log.Fields{
+			"time":        time.Now().Format("2006-01-02 15:04:05"),
+			"error style": "operate  error",
+		}).Error(err.Error())
 		return false
 	}
 	// br := bufio.NewReader(fi)
@@ -52,21 +55,6 @@ func rewriteFile(file, timecontent, head string) bool {
 	return true
 }
 
-func showtime() {
-	fmt.Println(time.Now().Format("2006-01-02T15:04:05"))
-}
-
-func gitPost(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		return
-	}
-	fmt.Fprintf(w, "123")
-	var raw map[string]interface{}
-	json.Unmarshal(body, &raw)
-
-	fmt.Println(raw["commits"].([]interface{})[0].(map[string]interface{})["timestamp"])
-}
 func listFile(folder string) {
 	files, _ := ioutil.ReadDir(folder) //specify the current dir
 	// head := "--- \ntitle: \"技术日报(" + file[61:71] + ")\" \ndate: " + timecontent + "+08:00 \ncategories: [ \"" + categories + "\"]\ndraft: false\n---\n"
@@ -110,7 +98,10 @@ func listFile(folder string) {
 }
 
 func Fileoperate(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	// folder := "/root/website/content/post/news.caas.one"
-	folder := "/Users/yp-tc-m-5063/website/content/post/news.caas.one"
+	folder := "/root/website/content/post/news.caas.one"
+	// folder := "/Users/yp-tc-m-5063/website/content/post/news.caas.one"
 	listFile(folder)
+	log.WithFields(log.Fields{
+		"time": time.Now().Format("2006-01-02 15:04:05"),
+	}).Info("finish jobs ")
 }
