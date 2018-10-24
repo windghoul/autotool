@@ -56,6 +56,9 @@ func rewriteFile(file, timecontent, head string) bool {
 }
 
 func listFile(folder string) {
+	log.WithFields(log.Fields{
+		"time": time.Now().Format("2006-01-02 15:04:05"),
+	}).Info("success connect")
 	files, _ := ioutil.ReadDir(folder) //specify the current dir
 	// head := "--- \ntitle: \"技术日报(" + file[61:71] + ")\" \ndate: " + timecontent + "+08:00 \ncategories: [ \"" + categories + "\"]\ndraft: false\n---\n"
 
