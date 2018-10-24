@@ -89,7 +89,7 @@ func listFile(folder string) {
 				switch categories {
 				case "posts":
 					// fmt.Println(folder + "/" + file.Name())
-					timecontent := file.Name()[:10] + "T15:03:04+08:00"
+					timecontent := file.Name()[:10] + "T00:00:00+08:00"
 					head := "--- \ntitle: \"技术日报(" + file.Name()[:10] + ")\" \ndate: " + timecontent + "\ncategories: [ \"daily\"]\ndraft: false\n---\n"
 					rewriteFile(folder+"/"+file.Name(), timecontent, head)
 				case "translation":
@@ -110,6 +110,7 @@ func listFile(folder string) {
 }
 
 func Fileoperate(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	folder := "/root/website/content/post/news.caas.one"
+	// folder := "/root/website/content/post/news.caas.one"
+	folder := "/Users/yp-tc-m-5063/website/content/post/news.caas.one"
 	listFile(folder)
 }

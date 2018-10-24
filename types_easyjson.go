@@ -38,7 +38,7 @@ func easyjson6601e8cdDecodeGithubComWindghoulShellwithgo(in *jlexer.Lexer, out *
 		switch key {
 		case "id":
 			out.ID = string(in.String())
-		case "Timestamp":
+		case "timestamp":
 			out.Timestamp = string(in.String())
 		case "added":
 			if in.IsNull() {
@@ -134,7 +134,7 @@ func easyjson6601e8cdEncodeGithubComWindghoulShellwithgo(out *jwriter.Writer, in
 		out.String(string(in.ID))
 	}
 	{
-		const prefix string = ",\"Timestamp\":"
+		const prefix string = ",\"timestamp\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
