@@ -64,7 +64,7 @@ func git(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	log.WithFields(log.Fields{
 		"time": time.Now().Format("2006-01-02 15:04:05"),
 	}).Info("success connect")
-	pull := "cd /root/website/content/post/news.caas.one && git pull "
+	pull := "cd /root/website/content/post/news.caas.one && git pull && git add . && git commit -m \"add title\" && git push"
 	cmd := exec.Command("sh", "-c", pull)
 	var e bytes.Buffer
 	cmd.Stderr = &e
