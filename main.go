@@ -64,7 +64,7 @@ func git(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	log.WithFields(log.Fields{
 		"time": time.Now().Format("2006-01-02 15:04:05"),
 	}).Info("success connect")
-	pull := "cd /root/website/content/post/news.caas.one && git pull && git add . && git commit -m \"add title\" && git push"
+	pull := "cd /root/website/content/post/news.caas.one && git pull"
 	cmd := exec.Command("sh", "-c", pull)
 	var e bytes.Buffer
 	cmd.Stderr = &e
@@ -132,6 +132,25 @@ func git(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		}).Error("operate  error")
 		return
 	}
+
+	pushpost := " cd /root/website/content/post/news.caas.one && git add . && git commit -m \"add title\" && git push"
+	cmd = exec.Command("sh", "-c", pushpost)
+
+	cmd.Stderr = &e
+
+	out, err = cmd.Output()
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"time":        time.Now().Format("2006-01-02 15:04:05"),
+			"error style": "pushpost  error",
+		}).Error(e.String())
+		return
+	}
+	s = string(out[:])
+	log.WithFields(log.Fields{
+		"time": time.Now().Format("2006-01-02 15:04:05"),
+	}).Info(s)
 
 	hugoRun := "cd /root/website &&  hugo  "
 	cmd = exec.Command("/bin/bash", "-c", hugoRun)
